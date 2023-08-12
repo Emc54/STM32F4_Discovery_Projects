@@ -31,7 +31,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define THERMO_SLAVE_ADDR (0x48 << 1)
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -77,7 +77,9 @@ int _write(int file, char *ptr, int len)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+uint8_t buf[5];
+char log[100];
+uint16_t log_len;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -106,7 +108,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  printf("Hello World \n");
+	  HAL_I2C_Master_Receive(&hi2c1, THERMO_SLAVE_ADDR, buf, 5, HAL_MAX_DELAY);
+	  sprintf(log, "I2C Slave Data: 0x%x, 0x%x, 0x%x, 0x%x, 0x%x,\r\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
+	  printf(log);
 	  HAL_Delay(1000);
   }
 
