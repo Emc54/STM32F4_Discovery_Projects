@@ -22,6 +22,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include <stdint.h>
+#include "Thermo13.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -77,9 +79,9 @@ int _write(int file, char *ptr, int len)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-uint8_t buf[5];
+uint8_t buf[2];
 char log[100];
-uint16_t log_len;
+int temperature;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -108,8 +110,13 @@ uint16_t log_len;
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_I2C_Master_Receive(&hi2c1, THERMO_SLAVE_ADDR, buf, 5, HAL_MAX_DELAY);
-	  sprintf(log, "I2C Slave Data: 0x%x, 0x%x, 0x%x, 0x%x, 0x%x,\r\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
+	  HAL_I2C_Master_Receive(&hi2c1, THERMO_SLAVE_ADDR, buf, sizeof(buf), HAL_MAX_DELAY);
+	  sprintf(log, "I2C Slave Data: 0x%x, 0x%x,\r\n", buf[0], buf[1]);
+	  printf(log);
+	  log[0] = '\0';
+	  temperature = calc_temp(buf);
+	  printf("Converted Data\r\n");
+	  sprintf(log, "%d deg C\r\n",temperature);
 	  printf(log);
 	  HAL_Delay(1000);
   }
