@@ -20,7 +20,7 @@
 #define THIGH_REG 0x03
 #define SWRST_REG 0x04
 
-#define SCALE_FACTOR 0.0625
+#define SCALE_FACTOR 625
 
 #include <stdint.h>
 
