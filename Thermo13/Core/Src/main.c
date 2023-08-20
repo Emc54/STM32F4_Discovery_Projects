@@ -80,9 +80,8 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 uint8_t buf[2];
-char log[100];
-int temperature;
-float decs;
+char log[100];;
+float temperature;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -116,9 +115,8 @@ float decs;
 	  printf(log);
 	  log[0] = '\0';
 	  temperature = calc_temp(buf);
-	  decs  = (float)temperature/10000;
 	  printf("Converted Data\r\n");
-	  sprintf(log, " %.1f deg C\r\n",decs);
+	  sprintf(log, " %.1f deg C\r\n",temperature);
 	  printf(log);
 	  HAL_Delay(1000);
   }

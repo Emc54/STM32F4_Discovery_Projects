@@ -12,6 +12,6 @@
  *\brief Calculates the temperature from the raw bytes.
  * \param rxBuffer: A two byte buffer with the raw received temp data
  */
-int calc_temp(uint8_t *rxBuffer);
+float calc_temp(uint8_t *rxBuffer);
 
 #endif /* INC_THERMO13_H_ */

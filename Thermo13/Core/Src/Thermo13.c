@@ -20,7 +20,7 @@
 #define THIGH_REG 0x03
 #define SWRST_REG 0x04
 
-#define SCALE_FACTOR 625
+#define SCALE_FACTOR 625/10000
 
 #include <stdint.h>
 
@@ -36,7 +36,7 @@
 // Print to the Debug Port
 // 2) Convert to a way to display to an LCD Screen.
 
-int calc_temp(uint8_t *rxBuffer)
+float calc_temp(uint8_t *rxBuffer)
 {
 
 uint16_t temp_reading = (((uint16_t) rxBuffer[0] << 8) | rxBuffer[1]);
@@ -45,12 +45,12 @@ int temp;
 //Check for signed bit
 if(rxBuffer[0]&0x80)
 {
- temp =  ((int16_t)temp_reading >> 4) * SCALE_FACTOR;
+ temp =  ((int16_t)temp_reading >> 4);
 }
 else
 {
-  temp = (temp_reading>>4) * SCALE_FACTOR;
+  temp = (temp_reading>>4);
 }
-return temp;
+return (float)temp*SCALE_FACTOR;
 }
 
